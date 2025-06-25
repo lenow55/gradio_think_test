@@ -4,11 +4,11 @@ from collections.abc import Iterator
 import openai
 from openai.types.chat import ChatCompletionChunk
 
-model = "qwen/qwen3-30b-a3b:free"
+model = "Qwen/Qwen3-8B-FP8"
 
 client = openai.OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key="api_key",
+    base_url="http://localhost:8953/v1",
+    api_key="NYXV2sS3PLDYLbC",
 )
 
 
@@ -56,6 +56,9 @@ def stream_openai_response(
         reasoning = None
         if isinstance(chunk.choices[0].delta.__pydantic_extra__, dict):
             reasoning = chunk.choices[0].delta.__pydantic_extra__.get("reasoning")
+            reasoning = chunk.choices[0].delta.__pydantic_extra__.get(
+                "reasoning_content"
+            )
         if isinstance(reasoning, str):
             # Simulate thinking process
             thought_buffer += reasoning
